@@ -1,0 +1,14 @@
+#!/bin/bash
+clear
+if [[ $(diskutil list external) ]]; then #check empty output
+    diskutil list external
+    read -p "Inserire IDENTIFIER: " IDENTIFIER
+    device="/dev/$IDENTIFIER"
+    directory="/Volumes/$IDENTIFIER"
+    sudo diskutil unmountDisk $device
+    sudo mkdir $directory
+    sudo mount -t ntfs -o rw,auto,nobrowse $device $directory
+    open -a finder $directory
+else 
+    echo Nessun device esterno collegato
+fi  
